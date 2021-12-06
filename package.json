@@ -1,0 +1,19 @@
+{
+  "name": "flibrary",
+  "version": "1.0.0",
+  "description": "通用函数工具包",
+  "main": "index.js",
+  "author": "chaxus",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "rollup": "^2.60.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  }
+}
