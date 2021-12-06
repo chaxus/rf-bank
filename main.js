@@ -1,3 +1,4 @@
+import { canvasToImage } from './draw'
 /**
  * @description: 判断设备
  */
@@ -31,8 +32,8 @@ export const changeFavicon = link => {
     if ($favicon !== null) {
       $favicon.href = link;
     } else {
-      $favicon = document.createElement("link");
-      $favicon.rel = "icon";
+      $favicon = document.createElement('link');
+      $favicon.rel = 'icon';
       $favicon.href = link;
       document.head.appendChild($favicon);
     }
@@ -61,10 +62,10 @@ export const changeFavicon = link => {
     var arr1 = new Array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九');
     var arr2 = new Array('', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千','万', '十', '百', '千','亿');//可继续追加更高位转换值
     if(!num || isNaN(num)){
-        return "零";
+        return '零';
     }
-    var english = num.toString().split("")
-    var result = "";
+    var english = num.toString().split('')
+    var result = '';
     for (var i = 0; i < english.length; i++) {
         var des_i = english.length - 1 - i;//倒序排列设值
         result = arr2[i] + result;
@@ -92,13 +93,13 @@ export const changeFavicon = link => {
 /**
  * @description: 清除空格和换行
  */
-export const clearBr = (str = "") => {
-    if (str.length === 0) return "";
+export const clearBr = (str = '') => {
+    if (str.length === 0) return '';
     return str
-      .replace(/\s+/g, "")
-      .replace(/<\/?.+?>/g, "")
-      .replace(/[\r\n]/g, "");
-  },
+      .replace(/\s+/g, '')
+      .replace(/<\/?.+?>/g, '')
+      .replace(/[\r\n]/g, '');
+  }
 /**
 * 动态插入script/link标签
 * @param {Array | String} url script/link的url队列
@@ -197,3 +198,6 @@ export const getCookie = (objName) => {
     return '';
   };
 
+export {
+    canvasToImage
+}
