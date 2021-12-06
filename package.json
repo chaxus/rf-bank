@@ -1,8 +1,8 @@
 {
   "name": "flibrary",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "通用函数工具包",
-  "main": "index.js",
+  "main": "bundle.js",
   "author": "chaxus",
   "license": "MIT",
   "scripts": {
