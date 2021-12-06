@@ -1,5 +1,5 @@
 {
-  "name": "flibrary",
+  "name": "rf-bank",
   "version": "0.0.5",
   "description": "通用函数工具包",
   "main": "bundle.js",

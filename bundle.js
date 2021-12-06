@@ -1,7 +1,7 @@
 /*eslint-disable*/
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es6.string.includes.js'), require('core-js/modules/es7.array.includes.js'), require('core-js/modules/es6.regexp.split.js'), require('core-js/modules/es6.object.to-string.js'), require('core-js/modules/es6.regexp.to-string.js'), require('core-js/modules/es6.regexp.replace.js'), require('core-js/modules/es6.array.map.js'), require('core-js/modules/es6.promise.js'), require('core-js/modules/es6.string.iterator.js'), require('core-js/modules/es6.array.iterator.js'), require('core-js/modules/web.dom.iterable.js'), require('core-js/modules/es6.function.name.js')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es6.string.includes.js', 'core-js/modules/es7.array.includes.js', 'core-js/modules/es6.regexp.split.js', 'core-js/modules/es6.object.to-string.js', 'core-js/modules/es6.regexp.to-string.js', 'core-js/modules/es6.regexp.replace.js', 'core-js/modules/es6.array.map.js', 'core-js/modules/es6.promise.js', 'core-js/modules/es6.string.iterator.js', 'core-js/modules/es6.array.iterator.js', 'core-js/modules/web.dom.iterable.js', 'core-js/modules/es6.function.name.js'], factory) :
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('core-js/modules/es6.regexp.split.js'), require('core-js/modules/es6.object.to-string.js'), require('core-js/modules/es6.regexp.to-string.js'), require('core-js/modules/es6.regexp.replace.js'), require('core-js/modules/es6.array.map.js'), require('core-js/modules/es6.promise.js'), require('core-js/modules/es6.string.iterator.js'), require('core-js/modules/es6.array.iterator.js'), require('core-js/modules/web.dom.iterable.js'), require('core-js/modules/es6.function.name.js')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'core-js/modules/es6.regexp.split.js', 'core-js/modules/es6.object.to-string.js', 'core-js/modules/es6.regexp.to-string.js', 'core-js/modules/es6.regexp.replace.js', 'core-js/modules/es6.array.map.js', 'core-js/modules/es6.promise.js', 'core-js/modules/es6.string.iterator.js', 'core-js/modules/es6.array.iterator.js', 'core-js/modules/web.dom.iterable.js', 'core-js/modules/es6.function.name.js'], factory) :
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.flibrary = {}));
 })(this, (function (exports) { 'use strict';
 
@@ -3085,13 +3085,9 @@
 	 */
 
 	function isWeiXin() {
-	  if (isClient) {
-	    // window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
-	    var ua = window.navigator.userAgent.toLowerCase(); // alert(ua)
-	    // 通过正则表达式匹配ua中是否含有MicroMessenger字符串
-
-	    return ua.includes('micromessenger');
-	  }
+	  var ua = window.navigator.userAgent.toLowerCase();
+	  var flag = /micromessenger/.test(ua) && !/wxwork/.test(ua);
+	  return flag;
 	}
 	/**
 	 * @description: 改变网站在导航栏的图标

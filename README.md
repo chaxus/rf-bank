@@ -1,91 +1,284 @@
-# flibrary
-
-
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/pack-list/flibrary.git
-git branch -M main
-git push -uf origin main
+/**
+ * @description: 判断设备
+ */
+export const judgeDevice = (function () {
+    const ua = navigator.userAgent.toLowerCase();
+    if (/ipad|ipod/.test(ua)) {
+      return 'ipad';
+    } else if (/android|iphone/.test(ua)) {
+      return 'mobile';
+    }
+    return 'pc';
+  })();
+
+/**
+ * @description:  判断是否是微信环境
+ */
+export function isWeiXin() {
+    const ua = window.navigator.userAgent.toLowerCase();
+    const flag = /micromessenger/.test(ua) && !/wxwork/.test(ua);
+    return flag;
+}
+/**
+ * @description: 改变网站在导航栏的图标
+ */
+export const changeFavicon = link => {
+    let $favicon = document.querySelector('link[rel="icon"]');
+    if ($favicon !== null) {
+      $favicon.href = link;
+    } else {
+      $favicon = document.createElement('link');
+      $favicon.rel = 'icon';
+      $favicon.href = link;
+      document.head.appendChild($favicon);
+    }
+  };
+  /**
+   * @description: 获取地址栏的参数
+   */  
+  export const getAllQueryString = (url) => {
+    const r = {};
+    const _url = url || window.location.href;
+    if (_url.split('?')[1]) {
+        let str = _url.split('?')[1];
+        str = str.split('&');
+        str.forEach((item) => {
+            const key = item.split('=')[0];
+            const val = item.split('=')[1];
+            r[key] = decodeURIComponent(val);
+        });
+    }
+    return r;
+  }
+  /**
+   * @description: 数字转化为中文数字
+   */  
+  export const converToChinaNum = num => {
+    var arr1 = new Array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九');
+    var arr2 = new Array('', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千','万', '十', '百', '千','亿');//可继续追加更高位转换值
+    if(!num || isNaN(num)){
+        return '零';
+    }
+    var english = num.toString().split('')
+    var result = '';
+    for (var i = 0; i < english.length; i++) {
+        var des_i = english.length - 1 - i;//倒序排列设值
+        result = arr2[i] + result;
+        var arr1_index = english[des_i];
+        result = arr1[arr1_index] + result;
+    }
+    //将【零千、零百】换成【零】 【十零】换成【十】
+    result = result.replace(/零(千|百|十)/g, '零').replace(/十零/g, '十');
+    //合并中间多个零为一个零
+    result = result.replace(/零+/g, '零');
+    //将【零亿】换成【亿】【零万】换成【万】
+    result = result.replace(/零亿/g, '亿').replace(/零万/g, '万');
+    //将【亿万】换成【亿】
+    result = result.replace(/亿万/g, '亿');
+    //移除末尾的零
+    result = result.replace(/零+$/, '')
+    //将【零一十】换成【零十】
+    //result = result.replace(/零一十/g, '零十');//貌似正规读法是零一十
+    //将【一十】换成【十】
+    result = result.replace(/^一十/g, '十');
+    return result;
+  
+  }
+
+/**
+ * @description: 清除空格和换行
+ */
+export const clearBr = (str = '') => {
+    if (str.length === 0) return '';
+    return str
+      .replace(/\s+/g, '')
+      .replace(/<\/?.+?>/g, '')
+      .replace(/[\r\n]/g, '');
+  }
+/**
+* 动态插入script/link标签
+* @param {Array | String} url script/link的url队列
+* @param {Element} appendee 插入的父元素 默认body
+* @param {Function} callback 所有script onload回调 也可通过返回的promise执行回调
+*/
+export const scriptOnLoad = (urls, appendee, callback) => {
+    urls = Array.isArray(urls) ? urls : [urls];
+    const array = urls.map((src) => {
+        const cssReg = /\w*.css$/;
+        let script;
+        if (cssReg.test(src)) {
+            const link = document.createElement('link');
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            link.href = src;
+            script = link;
+        } else {
+            script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = src;
+        }
+        const bodyElement = document.getElementsByTagName('body')[0];
+        const currentAppendee = appendee || bodyElement;
+        currentAppendee.appendChild(script);
+        return new Promise((resolve) => {
+            script.onload = () => {
+                resolve();
+            };
+        });
+    });
+
+    return new Promise((resolve) => {
+        Promise.all(array).then(() => {
+            if (typeof callback === 'function') {
+                callback();
+            }
+            resolve();
+        });
+    });
+};
+/**
+ * @description: 是否是移动端
+ */
+export const isMobile = () => {
+    const ua = window.navigator.userAgent;
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(ua)) {
+        return true;
+    }
+    return false;
+};
+/**
+ * @description: 跨浏览器获取可视窗口大小
+ */
+export const getWindow = () => {
+    if (typeof window.innerWidth !== 'undefined') {
+        return {
+            width: window.innerWidth,
+            height: window.innerHeight,
+        };
+    }
+    return {
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
+    };
+};
+/**
+ * @description: 禁止用户缩放
+ */
+export const prohibit = () => {
+    const meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no';
+    document.getElementsByTagName('head')[0].appendChild(meta);
+};
+/**
+ * @description: 添加tdk
+ */
+export const tdk = (name, content) => {
+    const meta = document.createElement('meta');
+    meta.name = name;
+    meta.content = content;
+    document.getElementsByTagName('head')[0].appendChild(meta);
+};
+/**
+ * @description: 获取指定的cookie
+ */
+export const getCookie = (objName) => {
+    const arrStr = document.cookie.split('; ');
+    for (let i = 0; i < arrStr.length; i++) {
+      const item = arrStr[i].split('=');
+      if (item[0] == objName) {
+        return unescape(item[1]);
+      }
+    }
+    return '';
+  };
+
+/**
+ * @description: 绘制图片的基础方法
+ */
+export class canvasToImage {
+    constructor(width) {
+        this.width = width;
+        this.base = 1;
+        this.canvas = document.createElement('canvas');
+        this.context = this.canvas.getContext('2d');
+    }
+    /**
+    * @description: 写文字
+    */
+    writeText = (option) => {
+        const {
+            fontWeight,
+            fontSize,
+            textColor,
+            text,
+            x,
+            y,
+            fontFamily = 'AlibabaPuHuiTiH',
+        } = option;
+        return new Promise(reslove => {
+            this.context.font = `${fontWeight} ${fontSize * this.base}px ${fontFamily}`;
+            this.context.fillStyle = textColor;
+            this.context.fillText(text, x * this.base, y * this.base);
+            reslove();
+        });
+    };
+    /**
+    * @description: canvas导入图片
+    */
+    loadingImage = (imageData) => new Promise((resolve) => {
+        const image = new Image();
+        image.setAttribute('crossOrigin', 'anonymous');
+        image.src = imageData;
+        image.onload = () => {
+            resolve(image);
+        };
+    });
+    /**
+    * @description: canvas绘制二维码并设置大小和位置
+    */
+    drawQrcode = (option) => {
+        const { url, margin = 1.5 } = option;
+        return QRCode.toDataURL(url, { margin });
+    };
+    /**
+    * @description: 图片加载到canvas中，并设置位置和大小
+    */
+    drawImageToCancas = (option) => {
+        const { image, x, y, w, h } = option;
+        return new Promise(reslove => {
+            this.context.drawImage(image, x * this.base, y * this.base, w * this.base, h * this.base);
+            reslove();
+        });
+    };
+    /**
+    * @description: 初始化canvas背景
+    */
+    initImageBackground = ({ image }) => {
+        this.canvas.width = image.width;
+        this.canvas.height = image.height;
+        if (this.width) {
+            this.base = image.width / this.width;
+        }
+        return this.drawImageToCancas({ image, x: 0, y: 0, w: image.width / this.base, h: image.height / this.base });
+    };
+    /**
+    * @description: canavs转图片，导出最后的url
+    */
+    outputImage = () => new Promise(resolve => {
+        const url = this.canvas.toDataURL('image/png');
+        resolve(url);
+    });
+    /**
+    * @description: 加载自定义字体
+    */
+    importFont = (fontName, fontUrl) => new Promise((resolve) => {
+        const fontface = new FontFace(fontName, fontUrl);
+        document.fonts.add(fontface);
+        fontface.load();
+        fontface.loaded.then(() => resolve());
+    });
+
+}
 ```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/project/integrations/)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://docs.gitlab.com/ee/user/clusters/agent/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:334dca86238b72d29b3f92bbb67ce521?https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-
