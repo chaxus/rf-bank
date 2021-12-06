@@ -16,13 +16,9 @@ export const judgeDevice = (function () {
  * @description:  判断是否是微信环境
  */
 export function isWeiXin() {
-    if (isClient) {
-        // window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
-        const ua = window.navigator.userAgent.toLowerCase();
-        // alert(ua)
-        // 通过正则表达式匹配ua中是否含有MicroMessenger字符串
-        return ua.includes('micromessenger');
-    }
+    const ua = window.navigator.userAgent.toLowerCase();
+    const flag = /micromessenger/.test(ua) && !/wxwork/.test(ua);
+    return flag;
 }
 /**
  * @description: 改变网站在导航栏的图标
