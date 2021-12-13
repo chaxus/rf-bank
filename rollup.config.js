@@ -2,7 +2,7 @@
  * @Author: rzh
  * @Date: 2021-10-04 15:53:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-12-06 16:52:32
+ * @LastEditTime: 2021-12-13 14:48:33
  * @Description: Do not edit
  */
 import resolve from 'rollup-plugin-node-resolve';
@@ -16,7 +16,7 @@ export default [
   {
     input: './main.js',
     output: {
-      name: 'flibrary',
+      name: 'rf-bank',
       file: 'bundle.js',
       format: 'umd',
       sourcemap: true,
@@ -24,21 +24,27 @@ export default [
       
     },
     plugins: [
-      resolve({
-        browser: true,
-      }), // 这样 Rollup 能找到 `ms`
+      // resolve({
+      //   browser: true,
+      // }), // 这样 Rollup 能找到 `ms`
     //   eslint({
     //     throwOnError: true,
     //     throwOnWarning: true,
     //     include: ['main.js', 'draw.js'],
     //     exclude: ['node_modules/**'],
     //   }),
+      // babel({
+      //   exclude: 'node_modules/**', // 防止打包node_modules下的文件
+      //   runtimeHelpers: true, // 使plugin-transform-runtime生效
+      // }),
       babel({
-        exclude: 'node_modules/**', // 防止打包node_modules下的文件
-        runtimeHelpers: true, // 使plugin-transform-runtime生效
+        runtimeHelpers: true,
       }),
       // polyfills(),
-      commonjs(), // 这样 Rollup 能转换 `ms` 为一个ES模块
+      commonjs(),
+      resolve({
+        browser: true,
+      }),
       // terser()
     ],
   },

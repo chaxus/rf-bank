@@ -1,7 +1,7 @@
 {
   "name": "rf-bank",
   "version": "0.0.5",
-  "description": "通用函数工具包",
+  "description": "function",
   "main": "bundle.js",
   "author": "chaxus",
   "license": "MIT",
@@ -17,9 +17,11 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-eslint": "^7.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-polyfill-node": "^0.8.0"
   },
   "dependencies": {
+    "core-js": "2",
     "qrcode": "^1.5.0"
   }
 }

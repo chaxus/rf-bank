@@ -888,10 +888,33 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
+"@rollup/plugin-inject@^4.0.0":
+  version "4.0.3"
+  resolved "http://npm.koolearn.com/@rollup%2fplugin-inject/-/plugin-inject-4.0.3.tgz#6f04ebc14790a8bf892286fe9b8c0eb1ddf4d5ce"
+  integrity sha1-bwTrwUeQqL+JIob+m4wOsd301c4=
+  dependencies:
+    "@rollup/pluginutils" "^3.1.0"
+    estree-walker "^2.0.1"
+    magic-string "^0.25.7"
+
+"@rollup/pluginutils@^3.1.0":
+  version "3.1.0"
+  resolved "http://npm.koolearn.com/@rollup%2fpluginutils/-/pluginutils-3.1.0.tgz#706b4524ee6dc8b103b3c995533e5ad680c02b9b"
+  integrity sha1-cGtFJO5tyLEDs8mVUz5a1oDAK5s=
+  dependencies:
+    "@types/estree" "0.0.39"
+    estree-walker "^1.0.1"
+    picomatch "^2.2.2"
+
 "@types/estree@*":
   version "0.0.50"
   resolved "http://npm.koolearn.com/@types%2festree/-/estree-0.0.50.tgz#1e0caa9364d3fccd2931c3ed96fdbeaa5d4cca83"
   integrity sha1-Hgyqk2TT/M0pMcPtlv2+ql1MyoM=
+
+"@types/estree@0.0.39":
+  version "0.0.39"
+  resolved "http://npm.koolearn.com/@types%2festree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
+  integrity sha1-4Xfmme4bjCLSMXTKqnQiZEOJUJ8=
 
 "@types/node@*":
   version "16.11.11"
@@ -1138,6 +1161,11 @@ core-js-compat@^3.18.0, core-js-compat@^3.19.1:
     browserslist "^4.18.1"
     semver "7.0.0"
 
+core-js@2:
+  version "2.6.12"
+  resolved "https://registry.npmmirror.com/core-js/download/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
+  integrity sha1-2TM9+nsGXjR8xWgiGdb2kIWcwuw=
+
 cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "http://npm.koolearn.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -1320,6 +1348,16 @@ estree-walker@^0.6.1:
   version "0.6.1"
   resolved "http://npm.koolearn.com/estree-walker/-/estree-walker-0.6.1.tgz#53049143f40c6eb918b23671d1fe3219f3a1b362"
   integrity sha1-UwSRQ/QMbrkYsjZx0f4yGfOhs2I=
+
+estree-walker@^1.0.1:
+  version "1.0.1"
+  resolved "http://npm.koolearn.com/estree-walker/-/estree-walker-1.0.1.tgz#31bc5d612c96b704106b477e6dd5d8aa138cb700"
+  integrity sha1-MbxdYSyWtwQQa0d+bdXYqhOMtwA=
+
+estree-walker@^2.0.1:
+  version "2.0.2"
+  resolved "http://npm.koolearn.com/estree-walker/-/estree-walker-2.0.2.tgz#52f010178c2a4c117a7757cfe942adb7d2da4cac"
+  integrity sha1-UvAQF4wqTBF6d1fP6UKtt9LaTKw=
 
 esutils@^2.0.2:
   version "2.0.3"
@@ -1646,7 +1684,7 @@ lodash@^4.17.14, lodash@^4.17.19:
   resolved "http://npm.koolearn.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=
 
-magic-string@^0.25.2:
+magic-string@^0.25.2, magic-string@^0.25.7:
   version "0.25.7"
   resolved "http://npm.koolearn.com/magic-string/-/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"
   integrity sha1-P0l9b9NMZpxnmNy4IfLvMfVEUFE=
@@ -1798,6 +1836,11 @@ picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmmirror.com/picocolors/download/picocolors-1.0.0.tgz?cache=0&sync_timestamp=1634093339035&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fpicocolors%2Fdownload%2Fpicocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
   integrity sha1-y1vcdP8/UYkiNur3nWi8RFZKuBw=
+
+picomatch@^2.2.2:
+  version "2.3.0"
+  resolved "http://npm.koolearn.com/picomatch/-/picomatch-2.3.0.tgz#f1f061de8f6a4bf022892e2d128234fb98302972"
+  integrity sha1-8fBh3o9qS/AiiS4tEoI0+5gwKXI=
 
 pngjs@^5.0.0:
   version "5.0.0"
@@ -1957,6 +2000,13 @@ rollup-plugin-node-resolve@^5.2.0:
     is-module "^1.0.0"
     resolve "^1.11.1"
     rollup-pluginutils "^2.8.1"
+
+rollup-plugin-polyfill-node@^0.8.0:
+  version "0.8.0"
+  resolved "http://npm.koolearn.com/rollup-plugin-polyfill-node/-/rollup-plugin-polyfill-node-0.8.0.tgz#859c070822f5e38d221e5b4238cb34aa894c2b19"
+  integrity sha512-C4UeKedOmOBkB3FgR+z/v9kzRwV1Q/H8xWs1u1+CNe4XOV6hINfOrcO+TredKxYvopCmr+WKUSNsFUnD1RLHgQ==
+  dependencies:
+    "@rollup/plugin-inject" "^4.0.0"
 
 rollup-pluginutils@^2.7.1, rollup-pluginutils@^2.8.1:
   version "2.8.2"
