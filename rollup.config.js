@@ -2,14 +2,14 @@
  * @Author: rzh
  * @Date: 2021-10-04 15:53:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-12-13 14:48:33
+ * @LastEditTime: 2021-12-14 17:41:28
  * @Description: Do not edit
  */
 import resolve from 'rollup-plugin-node-resolve';
 // import polyfills from 'rollup-plugin-polyfill-node';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
-// import { terser } from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 // import { eslint } from 'rollup-plugin-eslint';
 
 export default [
@@ -45,7 +45,7 @@ export default [
       resolve({
         browser: true,
       }),
-      // terser()
+      terser()
     ],
   },
 ];
