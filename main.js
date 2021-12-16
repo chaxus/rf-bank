@@ -48,7 +48,9 @@ export const getAllQueryString = (url) => {
     str.forEach((item) => {
       const key = item.split('=')[0];
       const val = item.split('=')[1];
-      r[key] = decodeURIComponent(val);
+      if (key && val) {
+        r[key] = decodeURIComponent(val);
+      }
     });
   }
   return r;
