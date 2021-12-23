@@ -1,6 +1,14 @@
 import { canvasToImage } from './util/draw';
 import { download } from './util/fetch'
 import { toast } from './util/toast';
+
+
+interface memoize {
+  [propname:string|symbol]:string
+}
+interface obj {
+  [propname:string|symbol]:string
+}
 /**
  * @description: 判断设备
  */
@@ -25,8 +33,8 @@ export function isWeiXin() {
 /**
  * @description: 改变网站在导航栏的图标
  */
-export const changeFavicon = (link) => {
-  let $favicon = document.querySelector('link[rel="icon"]');
+export const changeFavicon = (link:string) => {
+  let $favicon:HTMLLinkElement|null = document.querySelector('link[rel="icon"]');
   if ($favicon !== null) {
     $favicon.href = link;
   } else {
@@ -39,13 +47,13 @@ export const changeFavicon = (link) => {
 /**
  * @description: 获取地址栏的参数
  */
-export const getAllQueryString = (url) => {
-  const r = {};
+export const getAllQueryString = (url:string) => {
+  const r:obj = {};
   const _url = url || window.location.href;
   if (_url.split('?')[1]) {
     let str = _url.split('?')[1];
-    str = str.split('&');
-    str.forEach((item) => {
+    let arr = str.split('&');
+    arr.forEach((item) => {
       const key = item.split('=')[0];
       const val = item.split('=')[1];
       if (key && val) {
@@ -58,8 +66,8 @@ export const getAllQueryString = (url) => {
 /**
  * @description: 数字转化为中文数字
  */
-export const converToChinaNum = (num) => {
-  var arr1 = new Array(
+export const converToChinaNum = (num:number) => {
+  const arr1 = new Array(
     '零',
     '一',
     '二',
@@ -71,7 +79,7 @@ export const converToChinaNum = (num) => {
     '八',
     '九'
   );
-  var arr2 = new Array(
+  const arr2 = new Array(
     '',
     '十',
     '百',
@@ -93,12 +101,12 @@ export const converToChinaNum = (num) => {
   if (!num || isNaN(num)) {
     return '零';
   }
-  var english = num.toString().split('');
-  var result = '';
-  for (var i = 0; i < english.length; i++) {
-    var des_i = english.length - 1 - i; //倒序排列设值
+  const english =num.toString().split('');
+  let result = '';
+  for (let i = 0; i < english.length; i++) {
+    const des_i = english.length - 1 - i; //倒序排列设值
     result = arr2[i] + result;
-    var arr1_index = english[des_i];
+    const arr1_index = Number(english[des_i]);
     result = arr1[arr1_index] + result;
   }
   //将【零千、零百】换成【零】 【十零】换成【十】
@@ -134,11 +142,11 @@ export const clearBr = (str = '') => {
  * @param {Element} appendee 插入的父元素 默认body
  * @param {Function} callback 所有script onload回调 也可通过返回的promise执行回调
  */
-export const scriptOnLoad = (urls, appendee, callback) => {
+export const scriptOnLoad = (urls:Array<string>, appendee:HTMLElement, callback:Function) => {
   urls = Array.isArray(urls) ? urls : [urls];
   const array = urls.map((src) => {
     const cssReg = /\w*.css$/;
-    let script;
+    let script:HTMLScriptElement|HTMLLinkElement;
     if (cssReg.test(src)) {
       const link = document.createElement('link');
       link.type = 'text/css';
@@ -155,7 +163,7 @@ export const scriptOnLoad = (urls, appendee, callback) => {
     currentAppendee.appendChild(script);
     return new Promise((resolve) => {
       script.onload = () => {
-        resolve();
+        resolve(script);
       };
     });
   });
@@ -165,7 +173,7 @@ export const scriptOnLoad = (urls, appendee, callback) => {
       if (typeof callback === 'function') {
         callback();
       }
-      resolve();
+      resolve(callback);
     });
   });
 };
@@ -207,7 +215,7 @@ export const prohibit = () => {
 /**
  * @description: 添加tdk
  */
-export const tdk = (name, content) => {
+export const tdk = (name:string, content:string) => {
   const meta = document.createElement('meta');
   meta.name = name;
   meta.content = content;
@@ -216,7 +224,7 @@ export const tdk = (name, content) => {
 /**
  * @description: 获取指定的cookie
  */
-export const getCookie = (objName) => {
+export const getCookie = (objName:string) => {
   const arrStr = document.cookie.split('; ');
   for (let i = 0; i < arrStr.length; i++) {
     const item = arrStr[i].split('=');
@@ -229,7 +237,7 @@ export const getCookie = (objName) => {
 /**
  * @description: 打印中间产生的值
  */
-export const log = (v) => {
+export const log = (v:any) => {
   console.log(v);
   return v;
 };
@@ -238,21 +246,18 @@ export const log = (v) => {
  * @description: 函数的组合
  * @param {array} args
  */
-export const compose =
-  (...args) =>
-  (value) =>
-    args.reverse().reduce((acc, fn) => fn(acc), value);
+export const compose = (...args: any[]) => (value: any) => args.reverse().reduce((acc, fn) => fn(acc), value);
 //如果是表达式赋值的话，不会变量提升
 
 /**
  * @description: 函数的柯里化
  * @param {*} func
  */
-export function curry(func) {
-  return function curriedFn(...args) {
+export function curry(func:Function) {
+  return function curriedFn(...args: any[]) {
     if (args.length < func.length) {
       return function () {
-        return curriedFn(...args.concat(Array.form(arguments)));
+        return curriedFn(...args.concat(Array.from(arguments)));
       };
     } else {
       return func(...args);
@@ -264,10 +269,10 @@ export function curry(func) {
  * @description: 函数的缓存
  * @param {*} fn
  */
-export function memoize(fn) {
-  let cache = {};
+export function memoize(fn:Function) {
+  let cache:memoize = {};
   return function () {
-    let key = JSON.stringfy(arguments);
+    let key = JSON.stringify(arguments);
     cache[key] = cache[key] || fn.apply(fn, arguments);
     return cache[key];
   };

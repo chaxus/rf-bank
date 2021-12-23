@@ -1,8 +1,8 @@
 /*
  * @Author: rzh
  * @Date: 2021-10-04 15:53:17
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-12-14 17:41:28
+ * @LastEditors: ran
+ * @LastEditTime: 2021-12-23 21:26:50
  * @Description: Do not edit
  */
 import resolve from 'rollup-plugin-node-resolve';
@@ -10,14 +10,21 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
+import ts from 'rollup-plugin-typescript2'
+import * as path from 'path'
 // import { eslint } from 'rollup-plugin-eslint';
 
+const extensions = [
+  '.js',
+  '.ts',
+  '.tsx'
+]
 export default [
   {
-    input: './main.js',
+    input: './main.ts',
     output: {
       name: 'rf-bank',
-      file: 'bundle.js',
+      file: 'dist/bundle.js',
       format: 'umd',
       sourcemap: true,
       banner: '/*eslint-disable*/',
@@ -37,9 +44,14 @@ export default [
       //   exclude: 'node_modules/**', // 防止打包node_modules下的文件
       //   runtimeHelpers: true, // 使plugin-transform-runtime生效
       // }),
+      ts({
+        tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+        extensions
+    }),
       babel({
         runtimeHelpers: true,
       }),
+     
       // polyfills(),
       commonjs(),
       resolve({
