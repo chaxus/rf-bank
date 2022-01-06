@@ -1,5 +1,5 @@
 import { canvasToImage } from './util/draw';
-import { download } from './util/fetch';
+import { fetchFile } from './util/fetch';
 import { toast } from './util/toast';
 interface obj {
     [propname: string | symbol]: string;
@@ -77,4 +77,4 @@ export declare function curry(func: Function): (...args: any[]) => any;
  * @param {*} fn
  */
 export declare function memoize(fn: Function): () => string;
-export { canvasToImage, download, toast };
+export { canvasToImage, fetchFile, toast };

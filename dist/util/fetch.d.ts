@@ -3,7 +3,7 @@ interface qs {
 }
 interface download {
     body?: string;
-    query: qs;
+    payload?: qs;
     filename: string;
     ContentType: string;
     methods: string;
@@ -20,5 +20,5 @@ declare const qs: (params: qs) => string;
  * @param {String} url 请求地址
  * @return {*} Promise
  */
-export declare const download: ({ body, query, filename, ContentType, methods, url, }: download) => Promise<void> | undefined;
+export declare const fetchFile: ({ payload, filename, methods, url }: download) => Promise<void>;
 export {};

@@ -5,7 +5,9 @@ util
 main.js
 bundle.js.map
 package-lock.json
+README.md
 rollup.config.js
+tsconfig.json
 yarn-error.log
 yarn.lock
 node_modules

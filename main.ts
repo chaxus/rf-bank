@@ -1,5 +1,5 @@
 import { canvasToImage } from './util/draw';
-import { download } from './util/fetch'
+import { fetchFile } from './util/fetch'
 import { toast } from './util/toast';
 
 
@@ -279,4 +279,4 @@ export function memoize(fn:Function) {
 }
 
   
-export { canvasToImage, download, toast };
+export { canvasToImage, fetchFile, toast };

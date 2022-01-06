@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-12-14 14:39:12
- * @LastEditTime: 2021-12-23 21:20:39
+ * @LastEditTime: 2022-01-06 17:44:46
  * @LastEditors: ran
  */
 import { toast } from "./toast";
@@ -11,7 +11,7 @@ interface qs {
 }
 interface download {
   body?: string;
-  query: qs;
+  payload?: qs;
   filename: string;
   ContentType: string;
   methods: string;
@@ -19,7 +19,7 @@ interface download {
 }
 interface headerType {
   methods: string;
-  credentials: string;
+  credentials: RequestCredentials;
   headers: Headers;
   body: string;
 }
@@ -43,13 +43,13 @@ const savingFile = (blob: Blob, fileName: string) => {
 const resBlob = (
   reader: ReadableStreamDefaultReader<BufferSource>,
   data: BlobPart[],
-  type: string | null
+  type: string | undefined
 ) =>
   new Promise((resolve) => {
     function push() {
       reader.read().then(({ done, value }) => {
         value && data.push(value);
-        done && type ? resolve(new Blob(data, { type })) : push();
+        done ? resolve(new Blob(data, { type })) : push()
       });
     }
     push();
@@ -81,6 +81,7 @@ const qs = (params: qs) => {
   });
   return qstring;
 };
+
 // 下载
 /**
  * @description: fetch下载的函数
@@ -92,45 +93,32 @@ const qs = (params: qs) => {
  * @param {String} url 请求地址
  * @return {*} Promise
  */
-export const download = ({
-  body,
-  query,
-  filename,
-  ContentType = "application/x-www-form-urlencoded",
-  methods = "GET",
-  url,
-}: download) => {
-  if (!url) return;
+ export const fetchFile = ({payload,filename='默认文件名.xlsx',methods="GET",url}:download) => {
   const option = {
-    methods,
     // credentials: 'include',
-    headers: {
-      "Content-Type": ContentType,
-    },
-    body: JSON.stringify(body),
+    headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }),
+    methods,
   };
-  let requestUrl = url;
-  if (query) {
-    requestUrl += `${qs(query)}`;
+  let requesetUrl = url;
+  if(payload){
+    requesetUrl = `${url}${qs(payload)}`
   }
-  return fetch(`${requestUrl}`, option)
-    .then((res: Response) => {
-      if (!filename) {
-        const str = res.headers.get("content-disposition") ?? "";
-        filename = decodeURIComponent(str.replace("attachment;filename=", ""));
-      }
-      if (res.body) return new Response(readStream(res.body.getReader()));
-      return res;
-    })
-    .then((res) => {
-      if (res?.body)
-        return resBlob(
-          res.body.getReader(),
-          [],
-          res.headers.get("Content-Type")
-        );
-      return new Promise((resolve) => resolve(new Blob()));
-    })
-    .then((res) => savingFile(res as Blob, filename))
-    .catch((error: { message: any }) => toast(`${error.message}请再次尝试`));
-};
+ return fetch(requesetUrl, option)
+ .then((res) => {
+     // 设置文件名，从响应头中获取
+     const str = res.headers.get('content-disposition')?.replace('attachment;filename=', '') ?? '收获地址.xlsx';
+     filename = decodeURIComponent(str);
+     return res.body && new Response(readStream(res.body.getReader()));
+ })
+ .then(res => {
+  if(res?.body){
+    return resBlob(res.body.getReader(), [], res.headers.get('Content-Type') ?? undefined)
+  }
+ })
+ .then(response => {
+  return savingFile(response as Blob, filename)
+ })
+ .catch(error => toast(`${error.message}请再次尝试`))
+}
