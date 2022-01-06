@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-12-14 14:39:12
- * @LastEditTime: 2022-01-06 17:44:46
+ * @LastEditTime: 2022-01-06 18:27:24
  * @LastEditors: ran
  */
 import { toast } from "./toast";
@@ -12,9 +12,9 @@ interface qs {
 interface download {
   body?: string;
   payload?: qs;
-  filename: string;
+  filename?: string;
   ContentType: string;
-  methods: string;
+  methods?: string;
   url: string;
 }
 interface headerType {
@@ -93,7 +93,7 @@ const qs = (params: qs) => {
  * @param {String} url 请求地址
  * @return {*} Promise
  */
- export const fetchFile = ({payload,filename='默认文件名.xlsx',methods="GET",url}:download) => {
+ export const fetchFile = ({payload,filename,methods="GET",url}:download) => {
   const option = {
     // credentials: 'include',
     headers: new Headers({
@@ -108,8 +108,7 @@ const qs = (params: qs) => {
  return fetch(requesetUrl, option)
  .then((res) => {
      // 设置文件名，从响应头中获取
-     const str = res.headers.get('content-disposition')?.replace('attachment;filename=', '') ?? '收获地址.xlsx';
-     filename = decodeURIComponent(str);
+     filename = filename ?? decodeURIComponent(res.headers.get('content-disposition')?.replace('attachment;filename=', '') ?? '收获地址.xlsx') ;
      return res.body && new Response(readStream(res.body.getReader()));
  })
  .then(res => {
@@ -118,7 +117,7 @@ const qs = (params: qs) => {
   }
  })
  .then(response => {
-  return savingFile(response as Blob, filename)
+  return savingFile(response as Blob, filename as string)
  })
  .catch(error => toast(`${error.message}请再次尝试`))
 }

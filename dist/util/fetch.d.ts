@@ -4,9 +4,9 @@ interface qs {
 interface download {
     body?: string;
     payload?: qs;
-    filename: string;
+    filename?: string;
     ContentType: string;
-    methods: string;
+    methods?: string;
     url: string;
 }
 declare const qs: (params: qs) => string;
