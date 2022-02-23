@@ -1,4 +1,4 @@
-import { canvasToImage } from './util/draw';
+import { Draw } from './util/draw';
 import { fetchFile } from './util/fetch';
 import { toast } from './util/toast';
 interface obj {
@@ -63,6 +63,10 @@ export declare const getCookie: (objName: string) => string;
  */
 export declare const log: (v: any) => any;
 /**
+ * @description: 异步打印中间产生的值
+ */
+export declare const asyLog: (v: any) => Promise<unknown>;
+/**
  * @description: 函数的组合
  * @param {array} args
  */
@@ -77,4 +81,4 @@ export declare function curry(func: Function): (...args: any[]) => any;
  * @param {*} fn
  */
 export declare function memoize(fn: Function): () => string;
-export { canvasToImage, fetchFile, toast };
+export { Draw, fetchFile, toast };

@@ -1,4 +1,4 @@
-import { canvasToImage } from './util/draw';
+import { Draw } from './util/draw';
 import { fetchFile } from './util/fetch'
 import { toast } from './util/toast';
 
@@ -241,6 +241,13 @@ export const log = (v:any) => {
   console.log(v);
   return v;
 };
+/**
+ * @description: 异步打印中间产生的值
+ */
+export const asyLog = (v:any) => new Promise((resolve)=>{
+  console.log(v);
+  resolve(v)
+})
 
 /**
  * @description: 函数的组合
@@ -279,4 +286,4 @@ export function memoize(fn:Function) {
 }
 
   
-export { canvasToImage, fetchFile, toast };
+export { Draw, fetchFile, toast };

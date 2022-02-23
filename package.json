@@ -1,6 +1,6 @@
 {
   "name": "rf-bank",
-  "version": "0.0.11",
+  "version": "0.0.16",
   "description": "function",
   "main": "dist/bundle.js",
   "author": "",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "core-js": "2",
-    "qrcode": "^1.5.0"
+    "qrcode": "^1.5.0",
+    "rf-bank": "^0.0.15"
   }
 }

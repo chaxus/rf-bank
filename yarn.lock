@@ -2124,6 +2124,14 @@ restore-cursor@^3.1.0:
     onetime "^5.1.0"
     signal-exit "^3.0.2"
 
+rf-bank@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.npmjs.org/rf-bank/-/rf-bank-0.0.15.tgz#d36a2c4435965a4bb54953831a1371dce22c9dd6"
+  integrity sha512-X2sZhssVOvJEJniau/Rz6iTgEMy+iwk99sLF2nepkeZ4oTwZdfh9g2EBbr22mLXfqSjspug8RyExXTGOq4l7FQ==
+  dependencies:
+    core-js "2"
+    qrcode "^1.5.0"
+
 rimraf@2.6.3:
   version "2.6.3"
   resolved "http://npm.koolearn.com/rimraf/-/rimraf-2.6.3.tgz#b2d104fe0d8fb27cf9e0a1cda8262dd3833c6cab"

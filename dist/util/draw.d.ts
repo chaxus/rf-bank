@@ -21,7 +21,7 @@ interface drawImageToCancas {
 /**
  * @description: 绘制图片的基础方法
  */
-export declare class canvasToImage {
+export declare class Draw {
     width: number;
     base: number;
     canvas: HTMLCanvasElement;
@@ -30,30 +30,30 @@ export declare class canvasToImage {
     /**
      * @description: 写文字
      */
-    writeText: (option: writeText) => Promise<unknown>;
+    write: (option: writeText) => Promise<unknown>;
     /**
      * @description: canvas导入图片
      */
-    loadingImage: (imageData: string) => Promise<unknown>;
+    loadImg: (imageData: string) => Promise<unknown>;
     /**
      * @description: canvas绘制二维码并设置大小和位置
      */
-    drawQrcode: (option: drawQrcode) => Promise<string>;
+    qrcode: (option: drawQrcode) => Promise<string>;
     /**
      * @description: 图片加载到canvas中，并设置位置和大小
      */
-    drawImageToCancas: (option: drawImageToCancas) => Promise<unknown>;
+    comImg: (option: drawImageToCancas) => Promise<unknown>;
     /**
      * @description: 初始化canvas背景
      */
-    initImageBackground: (image: HTMLImageElement) => Promise<unknown>;
+    setBack: (image: HTMLImageElement) => Promise<unknown>;
     /**
      * @description: canavs转图片，导出最后的url
      */
-    outputImage: () => Promise<unknown>;
+    outImg: () => Promise<unknown>;
     /**
      * @description: 加载自定义字体
      */
-    importFont: (fontName: string, fontUrl: string) => Promise<unknown>;
+    loadFont: (fontName: string, fontUrl: string) => Promise<unknown>;
 }
 export {};

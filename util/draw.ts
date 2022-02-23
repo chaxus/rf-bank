@@ -2,7 +2,7 @@
  * @Author: ran
  * @Date: 2021-12-06 15:56:34
  * @LastEditors: ran
- * @LastEditTime: 2021-12-23 19:58:42
+ * @LastEditTime: 2022-02-23 20:13:12
  */
 import QRCode from "qrcode";
 interface writeText {
@@ -14,21 +14,21 @@ interface writeText {
   y: number;
   fontFamily?: string;
 }
-interface drawQrcode{
-    url:string, 
-    margin?:number
+interface drawQrcode {
+  url: string;
+  margin?: number;
 }
-interface drawImageToCancas{
-    image:HTMLImageElement, 
-    x:number, 
-    y:number, 
-    w:number, 
-    h:number
+interface drawImageToCancas {
+  image: HTMLImageElement;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
 }
 /**
  * @description: 绘制图片的基础方法
  */
-export class canvasToImage {
+export class Draw {
   width: number;
   base: number;
   canvas: HTMLCanvasElement;
@@ -42,7 +42,7 @@ export class canvasToImage {
   /**
    * @description: 写文字
    */
-  writeText = (option: writeText) => {
+  write = (option: writeText) => {
     const {
       fontWeight,
       fontSize,
@@ -67,7 +67,7 @@ export class canvasToImage {
   /**
    * @description: canvas导入图片
    */
-  loadingImage = (imageData: string) =>
+  loadImg = (imageData: string) =>
     new Promise((resolve) => {
       const image = new Image();
       image.setAttribute("crossOrigin", "anonymous");
@@ -79,14 +79,14 @@ export class canvasToImage {
   /**
    * @description: canvas绘制二维码并设置大小和位置
    */
-  drawQrcode = (option:drawQrcode) => {
+  qrcode = (option: drawQrcode) => {
     const { url, margin = 1.5 } = option;
     return QRCode.toDataURL(url, { margin });
   };
   /**
    * @description: 图片加载到canvas中，并设置位置和大小
    */
-  drawImageToCancas = (option:drawImageToCancas) => {
+  comImg = (option: drawImageToCancas) => {
     const { image, x, y, w, h } = option;
     return new Promise((reslove) => {
       if (this.context) {
@@ -104,13 +104,13 @@ export class canvasToImage {
   /**
    * @description: 初始化canvas背景
    */
-  initImageBackground = (image: HTMLImageElement) => {
+  setBack = (image: HTMLImageElement) => {
     this.canvas.width = image.width;
     this.canvas.height = image.height;
     if (this.width) {
       this.base = image.width / this.width;
     }
-    return this.drawImageToCancas({
+    return this.comImg({
       image,
       x: 0,
       y: 0,
@@ -121,7 +121,7 @@ export class canvasToImage {
   /**
    * @description: canavs转图片，导出最后的url
    */
-  outputImage = () =>
+  outImg = () =>
     new Promise((resolve) => {
       const url = this.canvas.toDataURL("image/png");
       resolve(url);
@@ -129,7 +129,7 @@ export class canvasToImage {
   /**
    * @description: 加载自定义字体
    */
-  importFont = (fontName: string, fontUrl: string) =>
+  loadFont = (fontName: string, fontUrl: string) =>
     new Promise((resolve) => {
       const fontface = new FontFace(fontName, fontUrl);
       document.fonts.add(fontface);
