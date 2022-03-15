@@ -284,6 +284,20 @@ export function memoize(fn:Function) {
     return cache[key];
   };
 }
+/**
+ * @description: 传入对象，返回对象请求序列化的字符串
+ * @param {Object} 
+ * @return {string}
+ */
+export const querystring = (param:Record<string,unknown>) => {
+  let str = '';
+    Object.keys(param).forEach((item, index) => {
+      if (param[item] !== undefined && param[item] !== null && param[item] !== '') {
+        index === 0 ? str += `${item}=${param[item]}` : str += `&${item}=${param[item]}`;
+      }
+    });
+  return str
+} 
 
   
 export { Draw, fetchFile, toast };

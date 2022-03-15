@@ -81,4 +81,10 @@ export declare function curry(func: Function): (...args: any[]) => any;
  * @param {*} fn
  */
 export declare function memoize(fn: Function): () => string;
+/**
+ * @description: 传入对象，返回对象请求序列化的字符串
+ * @param {Object}
+ * @return {string}
+ */
+export declare const querystring: (param: Record<string, unknown>) => string;
 export { Draw, fetchFile, toast };
