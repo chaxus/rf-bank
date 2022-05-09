@@ -42,11 +42,11 @@ export declare class Draw {
     /**
      * @description: 图片加载到canvas中，并设置位置和大小
      */
-    comImg: (option: drawImageToCancas) => Promise<unknown>;
+    composeImg: (option: drawImageToCancas) => Promise<unknown>;
     /**
      * @description: 初始化canvas背景
      */
-    setBack: (image: HTMLImageElement) => Promise<unknown>;
+    initBackdrop: (image: HTMLImageElement) => Promise<unknown>;
     /**
      * @description: canavs转图片，导出最后的url
      */

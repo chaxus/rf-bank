@@ -1,6 +1,8 @@
 import { Draw } from './util/draw';
 import { fetchFile } from './util/fetch'
 import { toast } from './util/toast';
+import { isClient } from './util/index'
+
 
 
 interface memoize {
@@ -13,7 +15,8 @@ interface obj {
  * @description: 判断设备
  */
 export const judgeDevice = (function () {
-  const ua = navigator.userAgent.toLowerCase();
+  if(!isClient) return 
+  const ua = window.navigator.userAgent.toLowerCase();
   if (/ipad|ipod/.test(ua)) {
     return 'ipad';
   } else if (/android|iphone/.test(ua)) {
@@ -26,6 +29,7 @@ export const judgeDevice = (function () {
  * @description:  判断是否是微信环境
  */
 export function isWeiXin() {
+  if(!isClient) return 
   const ua = window.navigator.userAgent.toLowerCase();
   const flag = /micromessenger/.test(ua) && !/wxwork/.test(ua);
   return flag;
@@ -34,6 +38,7 @@ export function isWeiXin() {
  * @description: 改变网站在导航栏的图标
  */
 export const changeFavicon = (link:string) => {
+  if(!isClient) return 
   let $favicon:HTMLLinkElement|null = document.querySelector('link[rel="icon"]');
   if ($favicon !== null) {
     $favicon.href = link;
@@ -48,6 +53,7 @@ export const changeFavicon = (link:string) => {
  * @description: 获取地址栏的参数
  */
 export const getAllQueryString = (url:string) => {
+  if(!isClient) return 
   const r:obj = {};
   const _url = url || window.location.href;
   if (_url.split('?')[1]) {
@@ -143,6 +149,7 @@ export const clearBr = (str = '') => {
  * @param {Function} callback 所有script onload回调 也可通过返回的promise执行回调
  */
 export const scriptOnLoad = (urls:Array<string>, appendee:HTMLElement, callback:Function) => {
+  if(!isClient) return 
   urls = Array.isArray(urls) ? urls : [urls];
   const array = urls.map((src) => {
     const cssReg = /\w*.css$/;
@@ -181,6 +188,7 @@ export const scriptOnLoad = (urls:Array<string>, appendee:HTMLElement, callback:
  * @description: 是否是移动端
  */
 export const isMobile = () => {
+  if(!isClient) return 
   const ua = window.navigator.userAgent;
   if (/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(ua)) {
     return true;
@@ -191,6 +199,7 @@ export const isMobile = () => {
  * @description: 跨浏览器获取可视窗口大小
  */
 export const getWindow = () => {
+  if(!isClient) return 
   if (typeof window.innerWidth !== 'undefined') {
     return {
       width: window.innerWidth,
@@ -206,6 +215,7 @@ export const getWindow = () => {
  * @description: 禁止用户缩放
  */
 export const prohibit = () => {
+  if(!isClient) return 
   const meta = document.createElement('meta');
   meta.name = 'viewport';
   meta.content =
@@ -216,6 +226,7 @@ export const prohibit = () => {
  * @description: 添加tdk
  */
 export const tdk = (name:string, content:string) => {
+  if(!isClient) return 
   const meta = document.createElement('meta');
   meta.name = name;
   meta.content = content;
@@ -225,6 +236,7 @@ export const tdk = (name:string, content:string) => {
  * @description: 获取指定的cookie
  */
 export const getCookie = (objName:string) => {
+  if(!isClient) return 
   const arrStr = document.cookie.split('; ');
   for (let i = 0; i < arrStr.length; i++) {
     const item = arrStr[i].split('=');

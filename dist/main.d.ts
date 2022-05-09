@@ -7,11 +7,11 @@ interface obj {
 /**
  * @description: 判断设备
  */
-export declare const judgeDevice: string;
+export declare const judgeDevice: string | undefined;
 /**
  * @description:  判断是否是微信环境
  */
-export declare function isWeiXin(): boolean;
+export declare function isWeiXin(): boolean | undefined;
 /**
  * @description: 改变网站在导航栏的图标
  */
@@ -19,7 +19,7 @@ export declare const changeFavicon: (link: string) => void;
 /**
  * @description: 获取地址栏的参数
  */
-export declare const getAllQueryString: (url: string) => obj;
+export declare const getAllQueryString: (url: string) => obj | undefined;
 /**
  * @description: 数字转化为中文数字
  */
@@ -34,18 +34,18 @@ export declare const clearBr: (str?: string) => string;
  * @param {Element} appendee 插入的父元素 默认body
  * @param {Function} callback 所有script onload回调 也可通过返回的promise执行回调
  */
-export declare const scriptOnLoad: (urls: Array<string>, appendee: HTMLElement, callback: Function) => Promise<unknown>;
+export declare const scriptOnLoad: (urls: Array<string>, appendee: HTMLElement, callback: Function) => Promise<unknown> | undefined;
 /**
  * @description: 是否是移动端
  */
-export declare const isMobile: () => boolean;
+export declare const isMobile: () => boolean | undefined;
 /**
  * @description: 跨浏览器获取可视窗口大小
  */
 export declare const getWindow: () => {
     width: number;
     height: number;
-};
+} | undefined;
 /**
  * @description: 禁止用户缩放
  */
@@ -57,7 +57,7 @@ export declare const tdk: (name: string, content: string) => void;
 /**
  * @description: 获取指定的cookie
  */
-export declare const getCookie: (objName: string) => string;
+export declare const getCookie: (objName: string) => string | undefined;
 /**
  * @description: 打印中间产生的值
  */

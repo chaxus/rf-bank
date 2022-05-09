@@ -2,7 +2,7 @@
  * @Author: ran
  * @Date: 2021-12-06 15:56:34
  * @LastEditors: ran
- * @LastEditTime: 2022-02-23 20:13:12
+ * @LastEditTime: 2022-05-09 16:25:59
  */
 import QRCode from "qrcode";
 interface writeText {
@@ -86,7 +86,7 @@ export class Draw {
   /**
    * @description: 图片加载到canvas中，并设置位置和大小
    */
-  comImg = (option: drawImageToCancas) => {
+  composeImg = (option: drawImageToCancas) => {
     const { image, x, y, w, h } = option;
     return new Promise((reslove) => {
       if (this.context) {
@@ -104,13 +104,13 @@ export class Draw {
   /**
    * @description: 初始化canvas背景
    */
-  setBack = (image: HTMLImageElement) => {
+  initBackdrop = (image: HTMLImageElement) => {
     this.canvas.width = image.width;
     this.canvas.height = image.height;
     if (this.width) {
       this.base = image.width / this.width;
     }
-    return this.comImg({
+    return this.composeImg({
       image,
       x: 0,
       y: 0,

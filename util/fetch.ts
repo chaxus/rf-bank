@@ -1,10 +1,11 @@
 /*
  * @Author: your name
  * @Date: 2021-12-14 14:39:12
- * @LastEditTime: 2022-01-06 18:27:24
+ * @LastEditTime: 2022-05-09 16:55:33
  * @LastEditors: ran
  */
 import { toast } from "./toast";
+import { isClient } from './index'
 
 interface qs {
   [propname: string | symbol]: string;
@@ -24,6 +25,7 @@ interface headerType {
   body: string;
 }
 const downloadBlob = (blob: Blob, fileName: string) => {
+  if(!isClient) return 
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -94,6 +96,7 @@ const qs = (params: qs) => {
  * @return {*} Promise
  */
  export const fetchFile = ({payload,filename,methods="GET",url}:download) => {
+  if(!isClient) return 
   const option = {
     // credentials: 'include',
     headers: new Headers({

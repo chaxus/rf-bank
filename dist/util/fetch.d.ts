@@ -20,5 +20,5 @@ declare const qs: (params: qs) => string;
  * @param {String} url 请求地址
  * @return {*} Promise
  */
-export declare const fetchFile: ({ payload, filename, methods, url }: download) => Promise<void>;
+export declare const fetchFile: ({ payload, filename, methods, url }: download) => Promise<void> | undefined;
 export {};

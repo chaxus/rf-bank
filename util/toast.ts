@@ -1,15 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2021-12-14 14:49:36
- * @LastEditTime: 2021-12-23 19:43:15
+ * @LastEditTime: 2022-05-09 16:58:00
  * @LastEditors: ran
  */
+import { isClient } from './index'
 /**
  * @description: 移动端的toast
  * @param {*} msg
  * @param {*} duration
  */
 export function toast(msg: string, duration: number = 2000) {
+  if(!isClient) return 
   duration = Number.isNaN(duration) ? 3000 : duration;
       const dom = document.createElement('div');
       dom.innerHTML = msg;
